@@ -4,7 +4,7 @@ import splash_screen_logo from '../src/assets/splash_screen_logo.png';
 import BarLoader from "react-spinners/BarLoader";
 // import axiosInstance from "../src/services/axiosInstance.js";
 import { useState, useEffect } from 'react';
-import './home.css';
+import './Home.css';
 
 const Home = () => {
     const [loading, setLoading] = useState(true);

@@ -32,6 +32,7 @@ function AuthWrapper(props) {
 
     } catch (error) {
       console.log("Error verifying token or loading new token: ", error.message);
+      localStorage.setItem("authToken", "");
       setError(error.message);
     }
   };

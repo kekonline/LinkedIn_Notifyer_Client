@@ -1,65 +1,32 @@
-//rafce
-
 import splash_screen_logo from '../src/assets/splash_screen_logo.png';
+import { AuthContext } from "../src/context/authorization.jsx";
 import BarLoader from "react-spinners/BarLoader";
-// import axiosInstance from "../src/services/axiosInstance.js";
-import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
 import './Home.css';
 
 const Home = () => {
+    const { userId } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        handleGetToken();
-
-    }, []);
-
-    const handleGetToken = async () => {
-        try {
-
-            // const getTokenRequest = await axiosInstance.get("/gettoken");
-            // console.log("this is what i got", getTokenRequest.data);
-            // localStorage.setItem("authToken", getTokenRequest.data.authToken);
-            // console.log(getTokenRequest.data.authToken);
-
-        } catch (error) {
-            console.log(error);
+        if (userId !== null) {
+            setLoading(false);
         }
+    }, [userId]);
 
-
-    }
-
-
-
-
-    if (loading === true) {
+    if (loading) {
         return (
             <div className="homeMainContainer">
-                <img className='splashScreenLogo' src={splash_screen_logo} alt="LinkedIn Notifyer Logo" />
+                <img className='splashScreenLogo' src={splash_screen_logo} alt="Logo" />
                 <BarLoader className='splashSpinner' color="#FFFFFF" width={135} />
             </div>
         );
     } else {
-
-
-        console.log('loadind', loading);
-
+        navigate('/joblisting');
+        return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 export default Home;

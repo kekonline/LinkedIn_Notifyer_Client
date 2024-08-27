@@ -1,5 +1,5 @@
-import splash_screen_logo from '../src/assets/splash_screen_logo.png';
-import { AuthContext } from "../src/context/authorization.jsx";
+import splash_screen_logo from '/src/assets/splash_screen_logo.png';
+import { AuthContext } from "../context/authorization.jsx";
 import BarLoader from "react-spinners/BarLoader";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
@@ -11,9 +11,11 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (userId !== null) {
-            setLoading(false);
-        }
+        setTimeout(() => {
+            if (userId !== null) {
+                setLoading(false);
+            }
+        }, 2000)
     }, [userId]);
 
     if (loading) {
@@ -24,8 +26,11 @@ const Home = () => {
             </div>
         );
     } else {
+
         navigate('/joblisting');
         return null;
+
+
     }
 }
 

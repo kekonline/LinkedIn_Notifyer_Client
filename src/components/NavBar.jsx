@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
+import "./NavBar.css"
 
 const NavBar = () => {
     return (
-        <div>
+        <div className="navBarContainer">
             Nav
             <div>
                 <NavLink to="/joblisting">

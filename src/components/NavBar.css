@@ -1,0 +1,8 @@
+.navBarContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+    height: 97vh;
+    width: 97vw;
+}

@@ -11,12 +11,17 @@ const NavBar = () => {
                 </NavLink>
             </div>
             <div>
-                <NavLink to="/addjob">
-                    Add A Job
+                <NavLink to="/jobsearch">
+                    Job Search
                 </NavLink>
             </div>
             <div>
-                <NavLink to="/" >
+                <NavLink to="/auth" >
+                    Get Notifyed / Register
+                </NavLink>
+            </div>
+            <div>
+                <NavLink to="/user" >
                     Get Notifyed / Register
                 </NavLink>
             </div>

@@ -11,12 +11,20 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             if (userId !== null) {
                 setLoading(false);
             }
-        }, 2000)
+        }, 2000);
+
+        return () => clearTimeout(timer);
     }, [userId]);
+
+    useEffect(() => {
+        if (!loading && userId !== null) {
+            navigate('/joblisting');
+        }
+    }, [loading, userId, navigate]);
 
     if (loading) {
         return (
@@ -25,13 +33,9 @@ const Home = () => {
                 <BarLoader className='splashSpinner' color="#FFFFFF" width={135} />
             </div>
         );
-    } else {
-
-        navigate('/joblisting');
-        return null;
-
-
     }
+
+    return null;
 }
 
 export default Home;

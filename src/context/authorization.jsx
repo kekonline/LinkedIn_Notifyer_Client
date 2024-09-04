@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import service from "../services/axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 const AuthContext = createContext();
 
 function AuthWrapper(props) {
@@ -15,7 +15,7 @@ function AuthWrapper(props) {
       let authToken = localStorage.getItem("authToken");
 
       if (!authToken || authToken === "undefined" || authToken === null || authToken === "") {
-        const newTokenResponse = await service.get("/gettoken");
+        const newTokenResponse = await axiosInstance.get("gettoken");
 
         if (newTokenResponse.data.errorMessage) {
           throw new Error(newTokenResponse.data.errorMessage);
@@ -25,7 +25,7 @@ function AuthWrapper(props) {
         localStorage.setItem("authToken", authToken);
       }
 
-      const verifySession = await service.get("/auth/verify");
+      const verifySession = await axiosInstance.get("auth/verify");
 
       setUserId(verifySession.data._id);
       // console.log("Session verified, User ID:", verifySession.data._id);

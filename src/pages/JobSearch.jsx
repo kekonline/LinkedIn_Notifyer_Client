@@ -14,8 +14,20 @@ function JobSearch() {
         setter(event.target.value);
     };
 
+    const handelSaveEditName = async () => {
+        event.preventDefault();
 
+        // ! validate not null and that values are not already in the array
 
+        try {
+            await axiosInstance.post("searchterm/", {
+                term: inputJobSerchTerm, location: inputLocation, jobType: jobType,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+    };
 
 
     const getSearchTerms = async () => {
@@ -27,16 +39,9 @@ function JobSearch() {
         getSearchTerms();
     }, [])
 
-
-
     return (
         <div>JobSearch
-
-
             <form>
-
-
-
                 <div>
                     <label htmlFor="inputLocation">Search Term: </label>
                     <input
@@ -64,7 +69,9 @@ function JobSearch() {
                         <option value="On-site">On-site</option>
                     </select>
                 </div>
-
+                <div>
+                    <button onClick={handelSaveEditName}>Save</button>
+                </div>
             </form>
 
         </div>

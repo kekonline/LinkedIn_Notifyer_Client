@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
-import axiosInstance from "/src/services/axiosInstance"
+import { useEffect, useState } from "react";
+import axiosInstance from "/src/services/axiosInstance";
 
 function JobSearch() {
     const [jobType, setJobType] = useState('');
     const [inputLocation, setInputLocation] = useState('');
-    const [inputJobSerchTerm, setInputJobSerchTerm] = useState('');
+    const [inputJobSearchTerm, setInputJobSearchTerm] = useState('');
+    const [jobSearchTermList, setJobSearchTermList] = useState([]);
 
     const handleJobTypeChange = (event) => {
         setJobType(event.target.value);
@@ -14,41 +15,62 @@ function JobSearch() {
         setter(event.target.value);
     };
 
-    const handelSaveEditName = async () => {
+    const handleSaveEditName = async (event) => {
         event.preventDefault();
 
-        // ! validate not null and that values are not already in the array
+        // Validate not null and that values are not already in the array
+        if (!inputJobSearchTerm || !inputLocation || !jobType) {
+            console.log("Please fill in all fields");
+            return;
+        }
 
         try {
             await axiosInstance.post("searchterm/", {
-                term: inputJobSerchTerm, location: inputLocation, jobType: jobType,
+                term: inputJobSearchTerm,
+                location: inputLocation,
+                jobType: jobType,
             });
+            getSearchTerms();
         } catch (error) {
             console.log(error);
         }
-
     };
 
-
     const getSearchTerms = async () => {
-        const responseSearchTerms = await axiosInstance.get("searchterm")
-        console.log("responsegetSearchTerms", responseSearchTerms)
+        try {
+            const responseSearchTerms = await axiosInstance.get("searchterm");
+            console.log("responseSearchTerms", responseSearchTerms);
+            setJobSearchTermList(responseSearchTerms.data.searchTerms);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
         getSearchTerms();
-    }, [])
+    }, []);
 
     return (
-        <div>JobSearch
+        <div>
+            <h1>JobSearch</h1>
+            <h2>Saved Search Terms</h2>
+            <ul>
+                {jobSearchTermList.map((term, index) => (
+                    <li key={index}>
+                        {term.term} - {term.location} - {term.jobType}
+                    </li>
+                ))}
+            </ul>
+            <br />
+            <br />
             <form>
                 <div>
-                    <label htmlFor="inputLocation">Search Term: </label>
+                    <label htmlFor="inputSearchTerm">Search Term: </label>
                     <input
                         id="inputSearchTerm"
                         type="text"
-                        value={inputJobSerchTerm}
-                        onChange={() => handleInputChange(event, setInputJobSerchTerm)}
+                        value={inputJobSearchTerm}
+                        onChange={(event) => handleInputChange(event, setInputJobSearchTerm)}
                     />
                 </div>
                 <div>
@@ -57,25 +79,26 @@ function JobSearch() {
                         id="inputLocation"
                         type="text"
                         value={inputLocation}
-                        onChange={() => handleInputChange(event, setInputLocation)}
+                        onChange={(event) => handleInputChange(event, setInputLocation)}
                     />
                 </div>
                 <div>
                     <label htmlFor="dropdown">Select A Job Type: </label>
                     <select id="dropdown" value={jobType} onChange={handleJobTypeChange}>
-                        <option value="" > </option>
+                        <option value=""></option>
                         <option value="Remote">Remote</option>
                         <option value="Hybrid">Hybrid</option>
                         <option value="On-site">On-site</option>
                     </select>
                 </div>
                 <div>
-                    <button onClick={handelSaveEditName}>Save</button>
+                    <button onClick={handleSaveEditName}>Save</button>
                 </div>
             </form>
 
+
         </div>
-    )
+    );
 }
 
-export default JobSearch
+export default JobSearch;

@@ -30,7 +30,21 @@ function JobSearch() {
                 location: inputLocation,
                 jobType: jobType,
             });
-            getSearchTerms();
+            await getSearchTerms();
+            setJobType("")
+            setInputLocation("")
+            setInputJobSearchTerm("")
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleDelete = async (_id) => {
+        event.preventDefault();
+
+        try {
+            await axiosInstance.delete("searchterm/" + _id);
+            await getSearchTerms();
         } catch (error) {
             console.log(error);
         }
@@ -52,12 +66,12 @@ function JobSearch() {
 
     return (
         <div>
-            <h1>JobSearch</h1>
+            <h1>Job Search Terms</h1>
             <h2>Saved Search Terms</h2>
             <ul>
-                {jobSearchTermList.map((term, index) => (
-                    <li key={index}>
-                        {term.term} - {term.location} - {term.jobType}
+                {jobSearchTermList.map((term) => (
+                    <li key={term._id}>
+                        {term.term} - {term.location} - {term.jobType} <button onClick={() => handleDelete(term._id)}>🚮</button>
                     </li>
                 ))}
             </ul>

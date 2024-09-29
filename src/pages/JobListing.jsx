@@ -5,39 +5,33 @@ import DOMPurify from 'dompurify';
 import axiosInstance from "/src/services/axiosInstance"
 
 
-const JobLinsting = () => {
+const JobLinsting = (props) => {
+    const { page } = props
     const [jobListingsList, setJobListingsList] = useState([]);
 
     const getJobListings = async () => {
-        const responseJobListings = await axiosInstance.get("job?section=unseen")
+        const responseJobListings = await axiosInstance.get("job/" + page);
         // console.log("responseJobListings", responseJobListings.data)
         setJobListingsList(responseJobListings.data)
     };
 
     useEffect(() => {
         getJobListings();
-    }, [])
+    }, [page])
 
-    const handleMarkAsSeen = async (_id) => {
+    const handleMarkAs = async (_id, markAs) => {
         event.preventDefault();
 
         try {
-            await axiosInstance.delete("searchterm/" + _id);
-            // await getSearchTerms();
+            await axiosInstance.put(`job/${_id}`, {
+                markAs
+            });
+            await getJobListings();
         } catch (error) {
             console.log(error);
         }
     };
-    const handleMarAsStared = async (_id) => {
-        event.preventDefault();
 
-        try {
-            await axiosInstance.delete("searchterm/" + _id);
-            // await getSearchTerms();
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     return (
         <div>
@@ -53,8 +47,8 @@ const JobLinsting = () => {
                     URL - <a href={job.jobURL}>Go To Job</a>
                     <br />
                     <div>
-                        <button onClick={() => handleMarkAsSeen(job._id)}>Mark As Seen</button>
-                        <button onClick={() => handleMarAsStared(job._id)}>Mark As Stared</button>
+                        <button onClick={() => handleMarkAs(job._id, "seen")}>Mark As Seen</button>
+                        <button onClick={() => handleMarkAs(job._id, "starred")}>Mark As Starred</button>
                     </div>
                     <br />
                     <hr />

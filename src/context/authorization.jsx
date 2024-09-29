@@ -4,7 +4,11 @@ const AuthContext = createContext();
 
 function AuthWrapper(props) {
   const [error, setError] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [userCheckedIn, setuserCheckedIn] = useState(false);
+  const [userEnrolled, setUserEnrolled] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userGetNotifications, setUserGetNotifications] = useState(false);
+  const [userIsActive, setUserIsActive] = useState(false);
 
   useEffect(() => {
     verifyToken();
@@ -12,10 +16,14 @@ function AuthWrapper(props) {
 
   const verifyToken = async () => {
     try {
+      // console.log("verify token")
+
       let authToken = localStorage.getItem("authToken");
 
       if (!authToken || authToken === "undefined" || authToken === null || authToken === "") {
-        const newTokenResponse = await axiosInstance.get("gettoken");
+        const newTokenResponse = await axiosInstance.get("auth/gettoken");
+
+        // console.log("newTokenResponse", newTokenResponse)
 
         if (newTokenResponse.data.errorMessage) {
           throw new Error(newTokenResponse.data.errorMessage);
@@ -25,20 +33,46 @@ function AuthWrapper(props) {
         localStorage.setItem("authToken", authToken);
       }
 
-      const verifySession = await axiosInstance.get("auth/verify");
+      const userInfo = await axiosInstance.get("auth/verify");
+      // console.log("authToken", authToken)
 
-      setUserId(verifySession.data._id);
-      // console.log("Session verified, User ID:", verifySession.data._id);
+      if (userInfo.data.error) {
+        throw new Error(userInfo.data.errorMessage);
+      }
+
+
+      if (userInfo.data.enrolled) {
+        const { email, getNotifications, isActive } = userInfo.data;
+        setUserEnrolled(true)
+        setUserEmail(email)
+        setUserGetNotifications(getNotifications)
+        setUserIsActive(isActive)
+      }
+
+      setuserCheckedIn(true);
+
+      // console.log("userInfo:", userInfo);
 
     } catch (error) {
       console.log("Error verifying token or loading new token: ", error.message);
       localStorage.setItem("authToken", "");
+      window.location.reload();
       setError(error.message);
+
     }
   };
 
   const passedContext = {
-    userId,
+    verifyToken,
+    userEnrolled,
+    setUserEnrolled,
+    userCheckedIn,
+    setuserCheckedIn,
+    userEmail,
+    setUserEmail,
+    userGetNotifications,
+    setUserGetNotifications,
+    userIsActive,
     error,
   };
 

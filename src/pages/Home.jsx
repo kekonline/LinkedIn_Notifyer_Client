@@ -6,25 +6,25 @@ import { useState, useEffect, useContext } from 'react';
 import './Home.css';
 
 const Home = () => {
-    const { userId } = useContext(AuthContext);
+    const { userCheckedIn } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (userId !== null) {
+            if (userCheckedIn !== false) {
                 setLoading(false);
             }
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, [userId]);
+    }, [userCheckedIn]);
 
     useEffect(() => {
-        if (!loading && userId !== null) {
-            navigate('/joblisting');
+        if (!loading && userCheckedIn !== false) {
+            navigate('/joblisting/new');
         }
-    }, [loading, userId, navigate]);
+    }, [loading, userCheckedIn, navigate]);
 
     if (loading) {
         return (

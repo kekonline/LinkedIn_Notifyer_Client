@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "/src/services/axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 
 function ForgotPassword() {
     const [email, setEmail] = useState("");

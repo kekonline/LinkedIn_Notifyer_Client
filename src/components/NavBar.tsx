@@ -1,10 +1,17 @@
 import { useContext } from "react";
-import { AuthContext } from "../context/authorization.jsx";
+import { AuthContext } from "../context/authorization";
 import { NavLink } from "react-router-dom";
 import "./NavBar.css"
 
 const NavBar = () => {
-    const { userEnrolled } = useContext(AuthContext);
+
+    const authContext = useContext(AuthContext);
+
+    if (!authContext) {
+        // Handle the case where context is not provided
+        return <div>Loading...</div>; // Or some fallback component
+    }
+    const { userEnrolled } = authContext;
 
     return (
         <div className="navBarContainer">

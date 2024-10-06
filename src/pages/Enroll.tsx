@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import axiosInstance from "/src/services/axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "../context/authorization.jsx";
+import { AuthContext } from "../context/authorization.js";
 
 function Enroll() {
     const { verifyToken } = useContext(AuthContext);

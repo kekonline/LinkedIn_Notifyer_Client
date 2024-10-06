@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import axiosInstance from "/src/services/axiosInstance";
-import { AuthContext } from "../context/authorization.jsx";
+import axiosInstance from "../services/axiosInstance";
+import { AuthContext } from "../context/authorization.js";
 import { useParams } from 'react-router-dom';
 
 function ActivateUser() {

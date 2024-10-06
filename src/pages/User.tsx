@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AuthContext } from "../context/authorization.jsx";
-import axiosInstance from "/src/services/axiosInstance";
+import { AuthContext } from "../context/authorization.js";
+import axiosInstance from "../services/axiosInstance";
 import { useNavigate } from 'react-router-dom';
 
 function User() {

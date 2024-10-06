@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom';
-import { AuthWrapper } from "./context/authorization.jsx";
-import App from './App.jsx'
+import { AuthWrapper } from "./context/authorization.js";
+import App from './App.js'
 import '../index.css'
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root') as HTMLElement ).render(
   <StrictMode>
     <BrowserRouter>
       <AuthWrapper>
@@ -14,3 +14,4 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>,
 )
+

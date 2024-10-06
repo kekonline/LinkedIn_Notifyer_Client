@@ -1,11 +1,21 @@
 //rafce
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import DOMPurify from 'dompurify';
-import axiosInstance from "/src/services/axiosInstance"
+import axiosInstance from "../services/axiosInstance"
+
+interface JobListingProps {
+    _id: string;
+    page: string;
+    company: string;
+    title: string;
+    description: string;
+    jobURL: string;
+    markAs: string;
+}
 
 
-const JobLinsting = (props) => {
+const JobLinsting = (props: { page: string }) => {
     const { page } = props
     const [jobListingsList, setJobListingsList] = useState([]);
 
@@ -19,7 +29,7 @@ const JobLinsting = (props) => {
         getJobListings();
     }, [page])
 
-    const handleMarkAs = async (_id, markAs) => {
+    const handleMarkAs = async (event: React.MouseEvent<HTMLButtonElement>,_id: string, markAs: string) => {
         event.preventDefault();
 
         try {
@@ -36,7 +46,7 @@ const JobLinsting = (props) => {
     return (
         <div>
             <h1>Job Listings</h1>
-            {jobListingsList.map((job) => (
+            {jobListingsList.map((job: JobListingProps) => (
                 <li key={job._id}>
                     <h2> Company - {job.company}</h2>
                     <br />
@@ -47,8 +57,8 @@ const JobLinsting = (props) => {
                     URL - <a href={job.jobURL}>Go To Job</a>
                     <br />
                     <div>
-                        <button onClick={() => handleMarkAs(job._id, "seen")}>Mark As Seen</button>
-                        <button onClick={() => handleMarkAs(job._id, "starred")}>Mark As Starred</button>
+                        <button onClick={(event) => handleMarkAs(event,job._id, "seen")}>Mark As Seen</button>
+                        <button onClick={(event) => handleMarkAs(event,job._id, "starred")}>Mark As Starred</button>
                     </div>
                     <br />
                     <hr />

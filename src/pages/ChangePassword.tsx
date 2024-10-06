@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from "/src/services/axiosInstance";
+import axiosInstance from "../services/axiosInstance";
 
 
 function ChangePassword() {

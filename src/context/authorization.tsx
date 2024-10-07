@@ -96,4 +96,4 @@ function AuthWrapper({ children }: AuthWrapperProps) {
   return <AuthContext.Provider value={passedContext}>{children}</AuthContext.Provider>;
 }
 
-export { AuthContext, AuthWrapper };
+export { AuthContext, AuthWrapper, AuthContextType };

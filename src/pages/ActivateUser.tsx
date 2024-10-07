@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import axiosInstance from "../services/axiosInstance";
-import { AuthContext } from "../context/authorization.js";
+import { AuthContext, AuthContextType } from "../context/authorization";
 import { useParams } from 'react-router-dom';
 
 function ActivateUser() {
-    const [userIsActive, setUserIsActive] = useState(null);
+    const [userIsActive, setUserIsActive] = useState<boolean>(false);
     const { token } = useParams();
-    const { userEnrolled, verifyToken } = useContext(AuthContext);
-    const [activationMessage, setActivationMessage] = useState(null);
+    const { userEnrolled, verifyToken } = useContext(AuthContext) as AuthContextType;
+    const [activationMessage, setActivationMessage] =useState<string | null>(null);
 
     useEffect(() => {
         const activateUser = async () => {

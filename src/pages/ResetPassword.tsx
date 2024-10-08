@@ -3,13 +3,15 @@ import { useParams } from 'react-router-dom';
 import axiosInstance from "../services/axiosInstance";
 
 function ResetPassword() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [password2, setPassword2] = useState<string>("");
     const { token } = useParams();
-    const [resetPasswordMessage, setResetPasswordMessage] = useState(null);
+    const [resetPasswordMessage, setResetPasswordMessage] = useState<string | null>(null);
 
-    const handleInputChange = (event, setter) => {
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>> ) => {
         setter(event.target.value);
     };
 
@@ -21,7 +23,7 @@ function ResetPassword() {
         }
     }, [resetPasswordMessage]);
 
-    const handleResetPassword = async (event) => {
+    const handleResetPassword = async (event: React.FormEvent) => {
         event.preventDefault();
 
         if (!email || !password || !password2) {

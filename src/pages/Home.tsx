@@ -1,13 +1,13 @@
 import splash_screen_logo from '/src/assets/splash_screen_logo.png';
-import { AuthContext } from "../context/authorization.js";
+import { AuthContext, AuthContextType } from "../context/authorization.js";
 import BarLoader from "react-spinners/BarLoader";
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import './Home.css';
 
 const Home = () => {
-    const { userCheckedIn } = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
+    const { userCheckedIn } = useContext(AuthContext) as AuthContextType;
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
     useEffect(() => {

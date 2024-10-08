@@ -4,17 +4,19 @@ import axiosInstance from "../services/axiosInstance";
 
 
 function ChangePassword() {
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [newPassword2, setNewPassword2] = useState("");
+    const [oldPassword, setOldPassword] =  useState<string>("");
+    const [newPassword, setNewPassword] =  useState<string>("");
+    const [newPassword2, setNewPassword2] =  useState<string>("");
     const navigate = useNavigate();
 
 
-    const handleInputChange = (event, setter) => {
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>> ) => {
         setter(event.target.value);
     };
 
-    const handleSaveChangePassword = async (event) => {
+    const handleSaveChangePassword = async ( event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         // Validate not null and that values are not already in the array
@@ -80,7 +82,7 @@ function ChangePassword() {
                     />
                 </div>
                 <div>
-                    <button onClick={handleSaveChangePassword}>Save</button>
+                    <button onClick={(event) => handleSaveChangePassword(event)}>Save</button>
                 </div>
                 <div>
                     <button onClick={() => navigate("/account/user")}>Back</button>

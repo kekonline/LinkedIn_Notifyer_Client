@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../services/axiosInstance";
 
 function ForgotPassword() {
-    const [email, setEmail] = useState("");
-    const [forgotPasswordMessage, setForgotPasswordMessage] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [forgotPasswordMessage, setForgotPasswordMessage] = useState<string>("");
 
-    const handleInputChange = (event, setter) => {
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>> ) => {
         setter(event.target.value);
     };
 
@@ -20,7 +22,7 @@ function ForgotPassword() {
         }
     }, [forgotPasswordMessage]);
 
-    const handleSendForgotPasswordEmail = async (event) => {
+    const handleSendForgotPasswordEmail = async (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault(); // Prevent form submission from refreshing the page
 
         try {
@@ -39,7 +41,7 @@ function ForgotPassword() {
 
             console.log("sendEmailResponse: ", enrollResponse.data.message);
             setForgotPasswordMessage(enrollResponse.data.message);
-        } catch (error) {
+        } catch (error: any) {
             console.log("Error: ", error.response ? error.response.data : error.message);
             setForgotPasswordMessage("An error occurred while sending the email.");
         }
@@ -50,7 +52,7 @@ function ForgotPassword() {
             <h1>Forgot Password</h1>
             <br />
             <br />
-            <form onSubmit={handleSendForgotPasswordEmail}>
+            <form onSubmit={() => handleSendForgotPasswordEmail}>
                 <div>
                     <label htmlFor="email">Email: </label>
                     <input

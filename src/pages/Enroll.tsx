@@ -1,25 +1,26 @@
 import { useState, useContext } from "react";
 import axiosInstance from "../services/axiosInstance";
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "../context/authorization.js";
+import { AuthContext, AuthContextType } from "../context/authorization";
 
 function Enroll() {
-    const { verifyToken } = useContext(AuthContext);
-    const [enrollType, setEnrollType] = useState("login");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
+    const { verifyToken } = useContext(AuthContext) as AuthContextType;
+    const [enrollType, setEnrollType] = useState<"login" | "register">("login");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [password2, setPassword2] = useState<string>("");
     const navigate = useNavigate();
 
     const handleEnrollType = () => {
         setEnrollType(enrollType === "login" ? "register" : "login");
     };
 
-    const handleInputChange = (event, setter) => {
+    const handleInputChange = ( event: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>>) => {
         setter(event.target.value);
     };
 
-    const handleEnroll = async (event) => {
+    const handleEnroll = async (event:  React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         if ((enrollType === "login" && (!email || !password)) || (enrollType === "register" && (!email || !password || !password2))) {
@@ -54,7 +55,7 @@ function Enroll() {
             return (
                 <>
                     <h1>Login</h1>
-                    <form onSubmit={handleEnroll}>
+                    <form onSubmit={() => handleEnroll}>
                         <div>
                             <label htmlFor="email">Email: </label>
                             <input
@@ -91,7 +92,7 @@ function Enroll() {
             return (
                 <>
                     <h1>Register</h1>
-                    <form onSubmit={handleEnroll}>
+                    <form onSubmit={() => handleEnroll}>
                         <div>
                             <label htmlFor="email">Email: </label>
                             <input

@@ -2,7 +2,7 @@ import { useState, useEffect, createContext, ReactNode } from 'react';
 import axiosInstance from '../services/axiosInstance';
 
 // Define the shape of your context
-interface AuthContextType {
+export interface AuthContextType {
   verifyToken: () => Promise<void>;
   userEnrolled: boolean;
   setUserEnrolled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,9 +39,10 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     try {
       let authToken = localStorage.getItem('authToken');
 
+      console.log("authToken", authToken);
       if (!authToken || authToken === 'undefined' || authToken === null || authToken === '') {
         const newTokenResponse = await axiosInstance.get<{ authToken: string; errorMessage?: string }>('auth/gettoken');
-
+        console.log('newTokenResponse', newTokenResponse);
         if (newTokenResponse.data.errorMessage) {
           throw new Error(newTokenResponse.data.errorMessage);
         }
@@ -74,7 +75,7 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     } catch (error: any) {
       console.error('Error verifying token or loading new token: ', error.message);
       localStorage.setItem('authToken', '');
-      window.location.reload();
+      // window.location.reload();
       setError(error.message);
     }
   };
@@ -96,4 +97,4 @@ function AuthWrapper({ children }: AuthWrapperProps) {
   return <AuthContext.Provider value={passedContext}>{children}</AuthContext.Provider>;
 }
 
-export { AuthContext, AuthWrapper, AuthContextType };
+export { AuthContext, AuthWrapper };

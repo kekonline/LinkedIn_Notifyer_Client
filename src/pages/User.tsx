@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../context/authorization.js";
+import { AuthContext , AuthContextType} from "../context/authorization.js";
 import axiosInstance from "../services/axiosInstance";
 import { useNavigate } from 'react-router-dom';
 
@@ -12,12 +12,12 @@ function User() {
         userGetNotifications,
         setUserGetNotifications,
         userIsActive,
-    } = useContext(AuthContext);
+    } = useContext(AuthContext) as AuthContextType;
 
     // console.log("userGetNotifications", userGetNotifications);
     const navigate = useNavigate();
 
-    const handleCheckboxChange = async (event) => {
+    const handleCheckboxChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const newNotificationsSetting = event.target.checked;
         setUserGetNotifications(newNotificationsSetting);
 

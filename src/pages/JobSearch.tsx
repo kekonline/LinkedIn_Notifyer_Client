@@ -1,21 +1,32 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "/src/services/axiosInstance";
+import axiosInstance from "../../src/services/axiosInstance";
+
 
 function JobSearch() {
-    const [jobType, setJobType] = useState('');
-    const [inputLocation, setInputLocation] = useState('');
-    const [inputJobSearchTerm, setInputJobSearchTerm] = useState('');
-    const [jobSearchTermList, setJobSearchTermList] = useState([]);
 
-    const handleJobTypeChange = (event) => {
+    interface JobSearchTermType {
+        _id: string ;
+        term: string | null;
+        location: string | null;
+        jobType: string | null;
+    }
+
+    const [jobType, setJobType] =useState<string>('');
+    const [inputLocation, setInputLocation] = useState<string>('');
+    const [inputJobSearchTerm, setInputJobSearchTerm] = useState<string>('');
+    const [jobSearchTermList, setJobSearchTermList] = useState<JobSearchTermType[]>([]);
+
+    const handleJobTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setJobType(event.target.value);
     };
 
-    const handleInputChange = (event, setter) => {
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>> ) => {
         setter(event.target.value);
     };
 
-    const handleSaveEditName = async (event) => {
+    const handleSaveEditName = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         // Validate not null and that values are not already in the array
@@ -39,7 +50,7 @@ function JobSearch() {
         }
     };
 
-    const handleDelete = async (_id) => {
+    const handleDelete = async (_id: string, event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         try {
@@ -69,9 +80,9 @@ function JobSearch() {
             <h1>Job Search Terms</h1>
             <h2>Saved Search Terms</h2>
             <ul>
-                {jobSearchTermList.map((term) => (
+                {jobSearchTermList.map((term: JobSearchTermType) => (
                     <li key={term._id}>
-                        {term.term} - {term.location} - {term.jobType} <button onClick={() => handleDelete(term._id)}>🚮</button>
+                        {term.term} - {term.location} - {term.jobType} <button onClick={(event) => handleDelete(term._id, event)}>🚮</button>
                     </li>
                 ))}
             </ul>
@@ -109,8 +120,6 @@ function JobSearch() {
                     <button onClick={handleSaveEditName}>Save</button>
                 </div>
             </form>
-
-
         </div>
     );
 }

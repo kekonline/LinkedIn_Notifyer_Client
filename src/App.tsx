@@ -28,7 +28,8 @@ const App = () => {
         <Route path="/account/enroll" element={<KickBack userEnrolledStatus={false}><Enroll /> </KickBack>} />
         <Route path="/account/user" element={<KickBack userEnrolledStatus={true} ><User /></KickBack>} />
         <Route path="/account/changepassword" element={<KickBack userEnrolledStatus={true}><ChangePassword /></KickBack>} />
-        <Route path="/account/activate/:token" element={<KickBack userEnrolledStatus={true}><ActivateUser /></KickBack>} />
+        <Route path="/account/activate/:token" element={<ActivateUser />} />
+        {/* <Route path="/account/activate/:token" element={<KickBack userEnrolledStatus={true}><ActivateUser /></KickBack>} /> */}
         <Route path="/account/forgotpassword" element={<KickBack userEnrolledStatus={true}><ForgotPassword /></KickBack>} />
         <Route path="/account/resetpassword/:token" element={<KickBack userEnrolledStatus={true}><ResetPassword /></KickBack>} />
       </Routes>

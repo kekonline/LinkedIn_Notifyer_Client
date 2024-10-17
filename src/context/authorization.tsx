@@ -39,7 +39,7 @@ function AuthWrapper({ children }: AuthWrapperProps) {
     try {
       let authToken = localStorage.getItem('authToken');
 
-      console.log("authToken", authToken);
+      // console.log("authToken", authToken);
       if (!authToken || authToken === 'undefined' || authToken === null || authToken === '') {
         const newTokenResponse = await axiosInstance.get<{ authToken: string; errorMessage?: string }>('auth/gettoken');
         console.log('newTokenResponse', newTokenResponse);

@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import axiosInstance from "../services/axiosInstance";
-import { useNavigate } from 'react-router-dom';
+import { FormEncType, useNavigate } from 'react-router-dom';
 import { AuthContext, AuthContextType } from "../context/authorization";
 
 function Enroll() {
@@ -15,12 +15,12 @@ function Enroll() {
         setEnrollType(enrollType === "login" ? "register" : "login");
     };
 
-    const handleInputChange = ( event: React.ChangeEvent<HTMLInputElement>,
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>,
         setter: React.Dispatch<React.SetStateAction<string>>) => {
         setter(event.target.value);
     };
 
-    const handleEnroll = async (event:  React.MouseEvent<HTMLButtonElement>) => {
+    const handleEnroll = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         if ((enrollType === "login" && (!email || !password)) || (enrollType === "register" && (!email || !password || !password2))) {
@@ -55,7 +55,7 @@ function Enroll() {
             return (
                 <>
                     <h1>Login</h1>
-                    <form onSubmit={() => handleEnroll}>
+                    <form onSubmit={(event) => handleEnroll(event as any)}>
                         <div>
                             <label htmlFor="email">Email: </label>
                             <input
@@ -92,7 +92,7 @@ function Enroll() {
             return (
                 <>
                     <h1>Register</h1>
-                    <form onSubmit={() => handleEnroll}>
+                    <form onSubmit={(event) => handleEnroll(event as any)}>
                         <div>
                             <label htmlFor="email">Email: </label>
                             <input

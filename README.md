@@ -37,7 +37,7 @@ For ongoing updates, new features, and backend development, follow the consolida
 
 Feel free to fork this repository if you'd like to explore the client code or build upon its functionality. Contributions to the full-stack project are always welcome!
 
-For more details, contact me on [GitHub](https://github.com/kekonline) or [LinkedIn](https://www.linkedin.com/in/rishidaryanani/).
+For more details, contact me on [GitHub](https://github.com/kekonline) or [LinkedIn](https://www.linkedin.com/in/rishi-daryanani-arias/).
 
 ---
 
